@@ -16,6 +16,7 @@ import environ
 # Initialise environment variables
 env = environ.Env()
 environ.Env.read_env()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -82,7 +83,7 @@ WSGI_APPLICATION = 'CognitiveTestsApp.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': env('DATABASE_NAME'),
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 

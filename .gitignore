@@ -1,2 +1,3 @@
 /CognitiveTestsApp/.env
 /.venv/
+/db.sqlite3
