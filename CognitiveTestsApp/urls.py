@@ -16,7 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-
+from landingpage import views as landingpage
+from perceptiontest import views as perceptiontest
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', landingpage.index, name="home"),
+    path('perceptiontest/', perceptiontest.perceptiontest_form, name="perceptiontest")
 ]
