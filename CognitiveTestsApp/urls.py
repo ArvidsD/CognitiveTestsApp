@@ -21,5 +21,6 @@ from perceptiontest import views as perceptiontest
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', landingpage.index, name="home"),
-    path('perceptiontest/', perceptiontest.perceptiontest_form, name="perceptiontest")
+    path('perceptiontest/', perceptiontest.perceptiontest_form, name="perceptiontest"),
+    path('perceptiontest-start/', perceptiontest.image_canvas, name="perceptiontest-start" )
 ]
