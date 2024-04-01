@@ -49,3 +49,9 @@ class Answer(models.Model):
     time_taken = models.DurationField()
     user_angle = models.IntegerField()
     correct_angle = models.IntegerField()
+
+class TestTakerQuestion(models.Model):
+    test_taker = models.ForeignKey(TestTaker, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    answered = models.BooleanField(default=False)
+

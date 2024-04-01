@@ -1,0 +1,125 @@
+{% extends 'perceptiontest/perceptiontest_image.html' %}
+
+{% block content %}
+
+    <div id="question-container" class="text-center mt-4">
+        <h2 id="question-text">Jautājums šeit</h2>
+        <form id="answer-form" class="center-form" method="post" action="#">
+            {% csrf_token %}
+            <input type="hidden" id="question_id" name="question_id">
+            <div class="form-group">
+                <label for="user_angle">Jūsu atbilde (leņķis):</label>
+                <input type="number" class="form-control" id="user_angle" name="user_angle" required>
+            </div>
+            <button type="submit" class="btn btn-primary mt-2">Iesniegt atbildi</button>
+        </form>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+    {{ block.super }}
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            getNextQuestion(); // Ielādē pirmo jautājumu, kad lapa ir pilnībā ielādējusies
+
+            function getNextQuestion() {
+                fetch("{% url 'get_question' %}", {
+                    method: 'GET', // GET metode, ja nevajag sūtīt papildu datus
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest', // Nodrošina, ka pieprasījums tiek atpazīts kā AJAX
+                    },
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.question_id) {
+                            updateQuestionUI(data); // Atjaunina UI ar jauno jautājumu
+                        } else {
+                            showCompletionMessage(); // Parāda paziņojumu par aptaujas beigām
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+
+            function submitAnswer(questionId, userAngle) {
+                fetch("{% url 'submit_answer' %}", {
+                    method: 'POST',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Content-Type': 'application/json',
+                        // Pievieno CSRF token, lai izietu cauri Django CSRF pārbaudei
+                        'X-CSRFToken': getCookie('csrftoken'),
+                    },
+                    body: JSON.stringify({question_id: questionId, user_angle: userAngle})
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log("Server response:", data);
+                        // Pēc veiksmīgas atbildes iesniegšanas, iegūst nākamo jautājumu
+                        getNextQuestion();
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+
+
+            function updateQuestionUI(data) {
+                // Atjaunina jautājuma tekstu
+                document.getElementById("question-text").textContent = data.question_text;
+
+                // Saglabā jautājuma ID slēptajā input laukā, lai to varētu izmantot atbildes iesniegšanā
+                document.getElementById("question_id").value = data.question_id;
+
+                // Opcionāli: ja vēlaties parādīt attēlus, kas saistīti ar katru jautājumu
+                const canvas = document.getElementById('imageCanvas');
+                if (canvas) {
+                    const context = canvas.getContext('2d');
+                    context.clearRect(0, 0, canvas.width, canvas.height); // Notīra canvas pirms zīmēšanas
+
+                    Object.keys(data.image_urls).forEach(key => {
+                        const imgInfo = data.image_urls[key];
+                        const img = new Image();
+                        img.onload = function () {
+                            context.drawImage(img, imgInfo.x_coordinate, imgInfo.y_coordinate, 70, 70); // Jums var būt jāpielāgo izmēri
+                        };
+                        img.src = imgInfo.image_url;
+                    });
+                }
+            }
+
+            function showCompletionMessage() {
+                // Implementējiet loģiku, lai parādītu paziņojumu par aptaujas beigām
+            }
+
+            function getCookie(name) {
+                // Helper funkcija, lai iegūtu CSRF token no sīkdatnēm
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+
+            document.addEventListener("DOMContentLoaded", function () {
+                document.getElementById("answer-form").addEventListener("submit", function (e) {
+                    e.preventDefault();
+                    const questionId = document.getElementById("question_id").value;
+                    const userAngle = document.getElementById("user_angle").value;
+                    submitAnswer(questionId, userAngle);
+                });
+            });
+        });
+
+    </script>
+{% endblock extra_js %}

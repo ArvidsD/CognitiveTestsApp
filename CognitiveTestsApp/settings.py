@@ -46,6 +46,7 @@ INSTALLED_APPS = [
 
     "landingpage.apps.LandingpageConfig",
     "perceptiontest.apps.PerceptiontestConfig"
+    "rest_framework"
 ]
 
 MIDDLEWARE = [

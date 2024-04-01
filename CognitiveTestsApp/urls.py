@@ -15,12 +15,11 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from landingpage import views as landingpage
-from perceptiontest import views as perceptiontest
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', landingpage.index, name="home"),
-    path('perceptiontest/', perceptiontest.perceptiontest_form, name="perceptiontest"),
-    path('perceptiontest-start/', perceptiontest.image_canvas, name="perceptiontest-start" )
+    path('perceptiontest/', include('perceptiontest.urls')),  # Pievienojiet šo rindiņu
 ]
