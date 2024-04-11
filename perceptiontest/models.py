@@ -3,7 +3,7 @@ import numpy as np
 class TestTaker(models.Model):
     first_name = models.CharField(max_length=32)
     age = models.IntegerField()
-    email = models.EmailField()
+    email = models.EmailField(unique=True)
     takenTest = models.CharField(max_length=32)
 
     def __str__(self):
@@ -50,8 +50,4 @@ class Answer(models.Model):
     user_angle = models.IntegerField()
     correct_angle = models.IntegerField()
 
-class TestTakerQuestion(models.Model):
-    test_taker = models.ForeignKey(TestTaker, on_delete=models.CASCADE)
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    answered = models.BooleanField(default=False)
 

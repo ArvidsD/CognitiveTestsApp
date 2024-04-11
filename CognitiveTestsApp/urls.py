@@ -20,6 +20,5 @@ from landingpage import views as landingpage
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', landingpage.index, name="home"),
-    path('perceptiontest/', include('perceptiontest.urls')),  # Pievienojiet šo rindiņu
+    path('perceptiontest/', include('perceptiontest.urls')),
 ]

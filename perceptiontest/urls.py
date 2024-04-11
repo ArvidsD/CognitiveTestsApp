@@ -2,9 +2,12 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('start/', views.start_test, name='start_test'),
-    path('question/', views.question_view, name='question_view'),
-    path('get_question/', views.get_question, name='get_question'),
-    path('submit_answer/', views.submit_answer, name='submit_answer'),
-    # path('test_completed/', views.test_completed, name='test_completed'),
+    path("testtaker/", views.TestTakerList.as_view(), name="testtaker"),
+    path('imageobjects/', views.ImageObjectList.as_view(), name='imageobject'),
+    path('question/', views.QuestionList.as_view(), name='questionlist'),
+    path('next_question/', views.NextQuestionView.as_view(), name='next_question'),
+    path('next_question/<int:last_answered_question_id>/', views.NextQuestionView.as_view(),
+         name='next_question_with_id'),
+    path('submit_answer/', views.SubmitAnswerView.as_view(), name='submit_answer'),
+
 ]
