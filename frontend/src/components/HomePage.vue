@@ -3,7 +3,7 @@
 </script>
 
 <template>
-<div class="container mt-5">
+<div class="container mt-5 custom-container" >
     <h1 class="text-center" >Virsraksts</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit
         amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a,
@@ -20,5 +20,8 @@
 </template>
 
 <style scoped>
-
+.custom-container {
+  max-width: 800px; /* Norāda maksimālo platumu */
+  margin: 0 auto; /* Centrē saturu horizontāli */
+}
 </style>

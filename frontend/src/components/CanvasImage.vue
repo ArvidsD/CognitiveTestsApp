@@ -1,7 +1,7 @@
 <template>
   <div class="container mt-5">
     <div class="d-flex justify-content-center">
-      <canvas class ="imageCanvas" ref="imageCanvas" width="800" height="600" style="border:1px solid #000000;">
+      <canvas class ="imageCanvas" ref="imageCanvas" width="800" height="600" style="">
         Your browser does not support the canvas element.
       </canvas>
     </div>

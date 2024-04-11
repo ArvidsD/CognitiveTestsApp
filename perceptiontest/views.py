@@ -36,7 +36,7 @@ class NextQuestionView(APIView):
         if next_question:
             serializer = QuestionSerializer(next_question)
             return Response(serializer.data)
-        return Response({"message": "No more questions available."})
+        return Response({"message": "finished"})
 
 
 class SubmitAnswerView(APIView):

@@ -1,25 +1,47 @@
 <template>
-  <div class="question-container">
-    <h2>Jautājums</h2>
-    <p v-if="question">Iedomājies, ka esi {{ question.object1.name }} un skaties uz {{ question.object2.name }}, kādā
-      leņķī atrodas {{ question.object3.name }}?</p>
-    <input type="number" v-model.number="answer" :disabled="!question" min="0" max="360"
-           placeholder="Ievadi leņķi (0-360)"/>
-    <button @click="submitAnswer" :disabled="!question || answer === null">Iesniegt atbildi</button>
-    <p v-if="message">{{ message }}</p>
+  <div class="container mt-2 custom-container mx-auto">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <p v-if="question">Iedomājies, ka esi <strong>{{ question.object1.name }}</strong> un skaties uz
+          <strong>{{ question.object2.name }}</strong>,
+          kādā
+          leņķī atrodas {{ question.object3.name }}?</p>
+        <!-- Komponentu un ievades lauku ietver Flexbox konteinerī -->
+        <div class="d-flex justify-content-center mt-2">
+          <degree-picker active-color="green" :modelValue="degrees" @update:modelValue="degrees = $event"/>
+        </div>
+        <div class="row align-items-center mt-2"> <!-- Pievieno rindu ar elementu vertikālo līdzināšanu -->
+          <div class="col">
+            <input type="number" class="form-control" v-model.number="degrees" :disabled="!question" min="0" max="360"
+                   placeholder="Ievadi leņķi (0-360)"/>
+          </div>
+          <div class="col-auto"> <!-- Izmanto col-auto lai kolonna aizņem tikai tik vietas, cik nepieciešams saturam -->
+            <button class="btn btn-primary" @click="submitAnswer" :disabled="!question || degrees === null">Iesniegt
+              atbildi
+            </button>
+          </div>
+        </div>
+
+        <p v-if="message">{{ message }}</p>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+import {DegreePicker} from "degree-picker";
+import {ref} from "vue";
+import "degree-picker/dist/style.css";
 
 export default {
+  components: {DegreePicker},
   data() {
     return {
       question: null,
-      answer: null,
+      degrees: 0, // Sākotnējā stāvokļa iestatīšana
       message: '',
-      startTime: Date.now(), // Sākuma laiks atbildes taimera uzsākšanai
+      startTime: Date.now(),
     };
   },
   mounted() {
@@ -35,9 +57,10 @@ export default {
       axios.get(url)
           .then(response => {
             this.question = response.data;
-            this.answer = null; // Reset answer field
+            this.degrees = 0; // Reset degrees
             this.message = ''; // Clear previous messages
-            this.startTime = Date.now(); // Atjaunojiet sākuma laiku
+            this.startTime = Date.now();
+            console.log(response.data);
           })
           .catch(error => {
             console.error("Error fetching the question:", error);
@@ -45,29 +68,27 @@ export default {
           });
     },
     submitAnswer() {
-      if (this.answer < 0 || this.answer > 360) {
+      if (this.degrees < 0 || this.degrees > 360) {
         this.message = 'Lūdzu, ievadiet derīgu leņķi no 0 līdz 360 grādiem.';
         return;
       }
 
       const endTime = Date.now();
-      const timeTaken = endTime - this.startTime; // Aprēķina laiku milisekundēs
+      const timeTaken = endTime - this.startTime;
 
       const answerData = {
         question: this.question.id,
-        test_taker: sessionStorage.getItem('testTakerId'), // Izmantojiet saglabāto test_taker ID no sessionStorage
-        time_taken: new Date(timeTaken).toISOString().substr(11, 8), // Konvertē uz HH:MM:SS formātu
-        user_angle: this.answer,
+        test_taker: sessionStorage.getItem('testTakerId'),
+        time_taken: new Date(timeTaken).toISOString().substr(11, 8),
+        user_angle: this.degrees,
         correct_angle: this.question.correct_angle,
       };
 
       axios.post('http://localhost:8000/perceptiontest/submit_answer/', answerData)
           .then(response => {
-
             this.message = "Atbilde veiksmīgi iesniegta!";
-            sessionStorage.setItem('lastAnsweredQuestionId', this.question.id); // Saglabājiet pēdējo atbildēto jautājumu ID
+            sessionStorage.setItem('lastAnsweredQuestionId', this.question.id);
             this.fetchNextQuestion(this.question.id);
-            
           })
           .catch(error => {
             console.error("Error submitting the answer:", error);
@@ -79,11 +100,11 @@ export default {
 </script>
 
 <style>
-/* Add your styles here */
-.question-container {
-  margin: 20px;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+/* Style adjustments */
+
+
+.custom-container {
+  max-width: 800px;
+  margin: 0 auto;
 }
 </style>
