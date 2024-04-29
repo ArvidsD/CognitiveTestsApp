@@ -38,10 +38,10 @@ export default {
         this.images.forEach(img => {
           const imageObj = new Image();
           imageObj.onload = () => {
-            context.drawImage(imageObj, img.x_coordinate, img.y_coordinate, 70, 70);
+            context.drawImage(imageObj, img.x_coordinate, img.y_coordinate, 100, 100);
           };
           // Pievienojiet pilno ceļu līdz attēla avotam
-          imageObj.src = `http://localhost:8000/static/${img.image_url}`;
+          imageObj.src = `http://localhost:8000/${img.image_url}`;
         });
       }
     }
@@ -53,7 +53,6 @@ export default {
   max-width: 100%;
   height: auto;
   aspect-ratio: 800 / 600; /* Saglabājiet oriģinālo proporciju, pieņemot, ka jūsu oriģinālais izmērs ir 800x600 */
-  border: 1px solid #000000;
   display: block; /* Lai nodrošinātu, ka tiek ievērots augstums atkarībā no platuma */
   margin: 0 auto; /* Centrēšanai */
 }

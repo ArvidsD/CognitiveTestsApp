@@ -1,14 +1,24 @@
 <template>
-  <div class="container mt-2 custom-container mx-auto">
+  <div>
     <div class="row justify-content-center">
       <div class="col-md-8">
         <p v-if="question">Iedomājies, ka esi <strong>{{ question.object1.name }}</strong> un skaties uz
           <strong>{{ question.object2.name }}</strong>,
           kādā
-          leņķī atrodas {{ question.object3.name }}?</p>
+          leņķī atrodas <strong>{{ question.object3.name }}?</strong></p>
         <!-- Komponentu un ievades lauku ietver Flexbox konteinerī -->
-        <div class="d-flex justify-content-center mt-2">
-          <degree-picker active-color="green" :modelValue="degrees" @update:modelValue="degrees = $event"/>
+        <div class="d-flex flex-column align-items-center"><p style="height: 0px;">{{ question.object2.name }}</p>
+          <p style="height: 0px;
+        position: relative;
+        top: 132px;
+        z-index: 100;">{{ question.object1.name }}</p>
+        </div>
+
+        <div class="d-flex justify-content-center">
+
+
+          <degree-picker active-color="black" :modelValue="degrees" width="220px" step=""
+                         @update:modelValue="degrees = $event"/>
         </div>
         <div class="row align-items-center mt-2"> <!-- Pievieno rindu ar elementu vertikālo līdzināšanu -->
           <div class="col">
@@ -16,13 +26,11 @@
                    placeholder="Ievadi leņķi (0-360)"/>
           </div>
           <div class="col-auto"> <!-- Izmanto col-auto lai kolonna aizņem tikai tik vietas, cik nepieciešams saturam -->
-            <button class="btn btn-primary" @click="submitAnswer" :disabled="!question || degrees === null">Iesniegt
+            <button class="btn btn-secondary" @click="submitAnswer" :disabled="!question || degrees === null">Iesniegt
               atbildi
             </button>
           </div>
         </div>
-
-        <p v-if="message">{{ message }}</p>
       </div>
     </div>
   </div>
@@ -31,7 +39,7 @@
 <script>
 import axios from 'axios';
 import {DegreePicker} from "degree-picker";
-import {ref} from "vue";
+
 import "degree-picker/dist/style.css";
 
 export default {
@@ -56,11 +64,18 @@ export default {
       }
       axios.get(url)
           .then(response => {
-            this.question = response.data;
-            this.degrees = 0; // Reset degrees
-            this.message = ''; // Clear previous messages
-            this.startTime = Date.now();
-            console.log(response.data);
+            if (response.data.message === "finished") {
+              // API atgriež "finished", kas nozīmē, ka nav vairāk jautājumu
+              this.message = "Paldies, ka piedalījāties testā!";
+              this.question = null; // Tīrīt jautājumu
+              sessionStorage.setItem('isTestCompleted', 'true'); // Iestatīt sesijā, ka tests ir pabeigts
+              this.$emit('test-completed'); // Izraisa notikumu, lai vecākkomponente zinātu par testa pabeigšanu
+            } else {
+              this.question = response.data;
+              this.degrees = 0; // Reset degrees
+              this.message = ''; // Clear previous messages
+              this.startTime = Date.now();
+            }
           })
           .catch(error => {
             console.error("Error fetching the question:", error);

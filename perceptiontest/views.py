@@ -1,17 +1,13 @@
-import json
-from tkinter import Image
-
-from django.shortcuts import render, redirect
-from django import forms
-from django.http import JsonResponse
-
-import perceptiontest
-from .models import Question, TestTaker, Answer, ImageObject
-from django.views.decorators.csrf import csrf_exempt
+from django.db import transaction
+from rest_framework.exceptions import ValidationError
+from .models import Question, TestTaker, ImageObject, Demographics
 from rest_framework import generics, status
-from .serializers import TestTakerSerializer, ImageObjectSerializer, QuestionSerializer, AnswerSerializer
+from .serializers import TestTakerSerializer, ImageObjectSerializer, QuestionSerializer, AnswerSerializer, \
+    DemographicsSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
+
+
 class TestTakerList(generics.ListCreateAPIView):
     queryset = TestTaker.objects.all()
     serializer_class = TestTakerSerializer
@@ -20,6 +16,7 @@ class TestTakerList(generics.ListCreateAPIView):
 class ImageObjectList(generics.ListAPIView):
     queryset = ImageObject.objects.all()
     serializer_class = ImageObjectSerializer
+
 
 class QuestionList(generics.ListAPIView):
     queryset = Question.objects.all()
@@ -48,100 +45,45 @@ class SubmitAnswerView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-# # Create your views here.
-# def image_canvas(request):
-#     images = list(perceptiontest.models.ImageObject.objects.values('name', 'image_url', 'x_coordinate', 'y_coordinate'))
-#     # Pārvērst Python sarakstu uz JSON
-#     images_json = json.dumps(images)
-#
-#     return render(request, 'perceptiontest/perceptiontest_image.html', {'images_json': images_json})
-#
-# class TestTakerForm(forms.ModelForm):
-#     class Meta:
-#         model = TestTaker
-#         fields = ['first_name', 'age', 'email']
-#
-#
-# # Sākuma skata funkcija
-# def start_test(request):
-#     if request.method == 'POST':
-#         form = TestTakerForm(request.POST)
-#         if form.is_valid():
-#             test_taker = form.save()
-#             # Saglabājiet test_taker ID sesijā, lai to varētu izmantot nākamajos soļos
-#             request.session['test_taker_id'] = test_taker.id
-#             # Novirziet lietotāju uz nākamo skatu, kur tiks rādīts pirmais jautājums
-#             return redirect(
-#                 'question_view')  # Pārliecinieties, ka šis URL nosaukums atbilst jūsu urls.py konfigurācijai
-#     else:
-#         form = TestTakerForm()
-#     return render(request, 'perceptiontest/perceptiontest_form.html', {'form': form})
-#
-#
-# def question_view(request):
-#     images = list(perceptiontest.models.ImageObject.objects.values('name', 'image_url', 'x_coordinate', 'y_coordinate'))
-#     # Pārvērst Python sarakstu uz JSON
-#     images_json = json.dumps(images)
-#     # Šis skats tiks izsaukts pēc TestTaker formas iesniegšanas
-#     return render(request, 'perceptiontest/perceptiontest_question.html', {'images_json': images_json})
-#
-#
-# def get_question(request):
-#     test_taker_id = request.session.get('test_taker_id')
-#     if not test_taker_id:
-#         return JsonResponse({'error': 'Test taker not identified'}, status=400)
-#
-#     # Pārbauda, kuri jautājumi ir jau atbildēti
-#     answered_questions = TestTakerQuestion.objects.filter(
-#         test_taker_id=test_taker_id,
-#         answered=True
-#     ).values_list('question_id', flat=True)
-#
-#     # Atrod nākamo neatzīmēto jautājumu
-#     next_question = Question.objects.exclude(id__in=answered_questions).first()
-#
-#     if next_question:
-#         # Sagatavo un atgriež jautājumu JSON formātā
-#         data = {
-#             'question_id': next_question.id,
-#             'question_text': f'Iedomājies, ka esi {next_question.object1.name}, un tu skaties uz {next_question.object2.name}. Kādā leņķī atrodas {next_question.object3.name}?',
-#             'image_urls': {
-#                 'object1': next_question.object1.image_url,
-#                 'object2': next_question.object2.image_url,
-#                 'object3': next_question.object3.image_url,
-#             }
-#         }
-#         return JsonResponse(data)
-#     else:
-#         # Ja vairs nav jautājumu
-#         return JsonResponse({'message': 'No more questions'})
-#
-#
-# @csrf_exempt
-# def submit_answer(request):
-#     if request.method == "POST":
-#         test_taker_id = request.session.get('test_taker_id')
-#         question_id = request.POST.get('question_id')
-#         user_angle = request.POST.get('user_angle')
-#
-#         if not all([test_taker_id, question_id, user_angle]):
-#             return JsonResponse({'error': 'Missing data'}, status=400)
-#
-#         # Saglabā lietotāja atbildi
-#         Answer.objects.create(
-#             question_id=question_id,
-#             test_taker_id=test_taker_id,
-#             user_angle=user_angle,
-#             correct_angle=0  # Šeit varat aprēķināt vai iestatīt pareizo leņķi pēc vajadzības
-#         )
-#
-#         # Atzīmēt jautājumu kā atbildētu
-#         TestTakerQuestion.objects.create(
-#             test_taker_id=test_taker_id,
-#             question_id=question_id,
-#             answered=True
-#         )
-#
-#         return JsonResponse({'success': True})
-#     else:
-#         return JsonResponse({'error': 'Invalid request'}, status=405)
+class SubmitDemographicView(APIView):
+    def post(self, request, format=None):
+        test_taker_id = request.data.get('test_taker')
+
+        # Izmantojiet 'select_for_update' lai bloķētu rindu, kamēr transakcija notiek
+        with transaction.atomic():
+            test_taker, _ = TestTaker.objects.select_for_update().get_or_create(id=test_taker_id)
+            demographic, created = Demographics.objects.select_for_update().get_or_create(test_taker=test_taker)
+
+            # Ja ieraksts jau eksistēja un nav jaunu datu, atgriežam esošo ierakstu
+            if not created and not request.data:
+                return Response(DemographicsSerializer(demographic).data)
+
+            if created or request.data:
+                serializer = DemographicsSerializer(demographic, data=request.data or None)
+                if serializer.is_valid(raise_exception=True):
+                    serializer.save()
+                    status_code = status.HTTP_201_CREATED if created else status.HTTP_200_OK
+                    return Response(serializer.data, status=status_code)
+
+            # Ja dati nav derīgi un ieraksts tika tikko izveidots, izdzēsiet to
+            if created:
+                demographic.delete()
+                raise ValidationError(serializer.errors)
+
+    def put(self, request, test_taker_id, format=None):
+        try:
+            demographic = Demographics.objects.get(test_taker=test_taker_id)
+        except Demographics.DoesNotExist:
+            # Ja neeksistē, varat izveidot jaunu ierakstu, nevis atgriezt kļūdu
+            demographic = Demographics(test_taker_id=test_taker_id)
+            # Vai atgriezt kļūdu, ja jūsu biznesa loģika to pieprasa
+            # return Response({'message': 'Demographic data not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        # Pievienojam `test_taker_id` datus pieprasījuma bodijā, ja tas jau nav iekļauts
+        request.data['test_taker'] = test_taker_id
+
+        serializer = DemographicsSerializer(demographic, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

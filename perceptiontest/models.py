@@ -1,13 +1,11 @@
 from django.db import models
 import numpy as np
-class TestTaker(models.Model):
-    first_name = models.CharField(max_length=32)
-    age = models.IntegerField()
-    email = models.EmailField(unique=True)
-    takenTest = models.CharField(max_length=32)
 
-    def __str__(self):
-        return self.email
+
+class TestTaker(models.Model):
+    takenTest = models.CharField(max_length=32)
+    session_id = models.CharField(max_length=252, default="")
+
 
 class ImageObject(models.Model):
     name = models.CharField(max_length=32)
@@ -17,6 +15,7 @@ class ImageObject(models.Model):
 
     def __str__(self):
         return self.name
+
 
 class Question(models.Model):
     object1 = models.ForeignKey(ImageObject, related_name='question_object1', on_delete=models.CASCADE)
@@ -43,6 +42,7 @@ class Question(models.Model):
         self.correct_angle = self.calculate_correct_angle()
         super(Question, self).save(*args, **kwargs)
 
+
 class Answer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     test_taker = models.ForeignKey(TestTaker, on_delete=models.CASCADE)
@@ -51,3 +51,28 @@ class Answer(models.Model):
     correct_angle = models.IntegerField()
 
 
+class EducationLevel(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+
+class Profession(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+
+class Demographics(models.Model):
+    test_taker = models.ForeignKey(TestTaker, on_delete=models.CASCADE)
+    gender = models.CharField(max_length=32, default="Not provided")
+    age = models.IntegerField(default=0)
+    native_language = models.CharField(max_length=52, default="Not provided")
+    education_levels = models.ManyToManyField(EducationLevel, blank=True)
+    professions = models.ManyToManyField(Profession, blank=True)
+    dominant_hand = models.CharField(max_length=52, default="Not provided")
+
+    def __str__(self):
+        return f"{self.test_taker}'s Demographics"

@@ -5,6 +5,7 @@ import CanvasImage from "@/components/CanvasImage.vue";
 import PerceptionQuestion from "@/components/PerceptionQuestion.vue";
 import PerceptionFinish from "@/components/PerceptionFinish.vue";
 import { onMounted } from 'vue';
+import DemographicQuestions from "@/components/DemographicQuestions.vue";
 const isTestFormSubmitted = ref(false);
 const isTestCompleted = ref(false); // Jauns stāvokļa mainīgais
 
@@ -40,12 +41,12 @@ onMounted(() => {
 
     <!-- Parāda CanvasImage un PerceptionQuestion, ja TestForm ir iesniegts, bet tests nav pabeigts -->
     <div v-if="isTestFormSubmitted && !isTestCompleted">
-      <CanvasImage/>
-      <PerceptionQuestion @test-completed="handleTestCompletion"/>
+      <CanvasImage class="mb-5"/>
+      <PerceptionQuestion @test-completed="handleTestCompletion" class="mb-5"/>
     </div>
 
     <!-- Parāda PerceptionFinish, ja tests ir pabeigts -->
-    <PerceptionFinish v-if="isTestCompleted"/>
+    <DemographicQuestions v-if="isTestCompleted"/>
   </div>
 </template>
 

@@ -3,8 +3,8 @@
     "model": "perceptiontest.imageobject",
     "pk": 1,
     "fields": {
-      "name": "heart_eyes",
-      "image_url": "perceptiontest/images/heart_eyes.png",
+      "name": "kaķis",
+      "image_url": "perceptiontest/static/perceptiontest/images/kaķis.png",
       "x_coordinate": 50,
       "y_coordinate": 50
     }
@@ -13,8 +13,8 @@
     "model": "perceptiontest.imageobject",
     "pk": 2,
     "fields": {
-      "name": "japanese_ogre",
-      "image_url": "perceptiontest/images/japanese_ogre.png",
+      "name": "koks",
+      "image_url": "perceptiontest/static/perceptiontest/images/koks.png",
       "x_coordinate": 150,
       "y_coordinate": 500
     }
@@ -23,8 +23,8 @@
     "model": "perceptiontest.imageobject",
     "pk": 3,
     "fields": {
-      "name": "joy",
-      "image_url": "perceptiontest/images/joy.png",
+      "name": "luksafors",
+      "image_url": "perceptiontest/static/perceptiontest/images/luksafors.png",
       "x_coordinate": 550,
       "y_coordinate": 350
     }
@@ -33,8 +33,8 @@
     "model": "perceptiontest.imageobject",
     "pk": 4,
     "fields": {
-      "name": "money_mouth_face",
-      "image_url": "perceptiontest/images/money_mouth_face.png",
+      "name": "māja",
+      "image_url": "perceptiontest/static/perceptiontest/images/maja.png",
       "x_coordinate": 250,
       "y_coordinate": 600
     }
@@ -43,8 +43,8 @@
     "model": "perceptiontest.imageobject",
     "pk": 5,
     "fields": {
-      "name": "pie",
-      "image_url": "perceptiontest/images/pie.png",
+      "name": "mašīna",
+      "image_url": "perceptiontest/static/perceptiontest/images/mašīna.png",
       "x_coordinate": 450,
       "y_coordinate": 250
     }
@@ -53,8 +53,8 @@
     "model": "perceptiontest.imageobject",
     "pk": 6,
     "fields": {
-      "name": "racing_motorcycle",
-      "image_url": "perceptiontest/images/racing_motorcycle.png",
+      "name": "puķe",
+      "image_url": "perceptiontest/static/perceptiontest/images/puķe.png",
       "x_coordinate": 250,
       "y_coordinate": 300
     }
@@ -63,8 +63,8 @@
     "model": "perceptiontest.imageobject",
     "pk": 7,
     "fields": {
-      "name": "sunglasses",
-      "image_url": "perceptiontest/images/sunglasses.png",
+      "name": "stop zīme",
+      "image_url": "perceptiontest/static/perceptiontest/images/stop.png",
       "x_coordinate": 50,
       "y_coordinate": 350
     }
