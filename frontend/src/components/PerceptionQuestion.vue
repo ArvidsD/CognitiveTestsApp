@@ -7,11 +7,11 @@
           kādā
           leņķī atrodas <strong>{{ question.object3.name }}?</strong></p>
         <!-- Komponentu un ievades lauku ietver Flexbox konteinerī -->
-        <div class="d-flex flex-column align-items-center"><p style="height: 0px;">{{ question.object2.name }}</p>
+        <div class="d-flex flex-column align-items-center"><p v-if="question" style="height: 0px;">{{ question.object2.name }}</p>
           <p style="height: 0px;
         position: relative;
         top: 132px;
-        z-index: 100;">{{ question.object1.name }}</p>
+        z-index: 100;" v-if="question">{{ question.object1.name }}</p>
         </div>
 
         <div class="d-flex justify-content-center">
@@ -116,10 +116,4 @@ export default {
 
 <style>
 /* Style adjustments */
-
-
-.custom-container {
-  max-width: 800px;
-  margin: 0 auto;
-}
 </style>
