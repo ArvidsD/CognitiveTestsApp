@@ -2,12 +2,13 @@
   <div>
     <div class="row justify-content-center">
       <div class="col-md-8">
-        <p v-if="question">Iedomājies, ka esi <strong>{{ question.object1.name }}</strong> un skaties uz
+        <p v-if="question" class="text-center">Iedomājies, ka esi <strong>{{ question.object1.name }}</strong> un
+          skaties uz
           <strong>{{ question.object2.name }}</strong>,
           kādā
           leņķī atrodas <strong>{{ question.object3.name }}?</strong></p>
-        <!-- Komponentu un ievades lauku ietver Flexbox konteinerī -->
-        <div class="d-flex flex-column align-items-center"><p v-if="question" style="height: 0px;">{{ question.object2.name }}</p>
+        <div class="d-flex flex-column align-items-center"><p v-if="question" style="height: 0px;">
+          {{ question.object2.name }}</p>
           <p style="height: 0px;
         position: relative;
         top: 132px;
@@ -17,15 +18,15 @@
         <div class="d-flex justify-content-center">
 
 
-          <degree-picker active-color="black" :modelValue="degrees" width="220px" step=""
+          <degree-picker active-color="black" :modelValue="degrees" width="220px" step="360"
                          @update:modelValue="degrees = $event"/>
+          <div class="vl"></div>
         </div>
-        <div class="row align-items-center mt-2"> <!-- Pievieno rindu ar elementu vertikālo līdzināšanu -->
-          <div class="col">
-            <input type="number" class="form-control" v-model.number="degrees" :disabled="!question" min="0" max="360"
+        <div class="row align-items-center mt-2 justify-content-center">
+          <div class="col-auto">
+            <input type="number" class="form-control hidden" v-model.number="degrees"
+                   :disabled="!question" min="0" max="360"
                    placeholder="Ievadi leņķi (0-360)"/>
-          </div>
-          <div class="col-auto"> <!-- Izmanto col-auto lai kolonna aizņem tikai tik vietas, cik nepieciešams saturam -->
             <button class="btn btn-secondary" @click="submitAnswer" :disabled="!question || degrees === null">Iesniegt
               atbildi
             </button>
@@ -47,7 +48,7 @@ export default {
   data() {
     return {
       question: null,
-      degrees: 0, // Sākotnējā stāvokļa iestatīšana
+      degrees: 0,
       message: '',
       startTime: Date.now(),
     };
@@ -58,22 +59,22 @@ export default {
   },
   methods: {
     fetchNextQuestion(lastAnsweredQuestionId) {
-      let url = 'http://localhost:8000/perceptiontest/next_question/';
+      let url = import.meta.env.VITE_DJANGO_SERVER_URL + '/perceptiontest/next_question/';
       if (lastAnsweredQuestionId) {
         url += `${lastAnsweredQuestionId}/`;
       }
       axios.get(url)
           .then(response => {
             if (response.data.message === "finished") {
-              // API atgriež "finished", kas nozīmē, ka nav vairāk jautājumu
+
               this.message = "Paldies, ka piedalījāties testā!";
               this.question = null; // Tīrīt jautājumu
-              sessionStorage.setItem('isTestCompleted', 'true'); // Iestatīt sesijā, ka tests ir pabeigts
-              this.$emit('test-completed'); // Izraisa notikumu, lai vecākkomponente zinātu par testa pabeigšanu
+              sessionStorage.setItem('isTestCompleted', 'true');
+              this.$emit('test-completed');
             } else {
               this.question = response.data;
-              this.degrees = 0; // Reset degrees
-              this.message = ''; // Clear previous messages
+              this.degrees = 0;
+              this.message = '';
               this.startTime = Date.now();
             }
           })
@@ -99,7 +100,7 @@ export default {
         correct_angle: this.question.correct_angle,
       };
 
-      axios.post('http://localhost:8000/perceptiontest/submit_answer/', answerData)
+      axios.post(import.meta.env.VITE_DJANGO_SERVER_URL + 'perceptiontest/submit_answer/', answerData)
           .then(response => {
             this.message = "Atbilde veiksmīgi iesniegta!";
             sessionStorage.setItem('lastAnsweredQuestionId', this.question.id);
@@ -115,5 +116,14 @@ export default {
 </script>
 
 <style>
-/* Style adjustments */
+.vl {
+  border-left: 2px solid black;
+  height: 103px;
+  position: absolute;
+  z-index: 2;
+  margin-top: 10px;
+}
+.hidden{
+  display: none;
+}
 </style>

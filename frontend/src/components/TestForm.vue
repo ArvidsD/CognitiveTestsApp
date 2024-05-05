@@ -13,9 +13,13 @@
         <li>Jūsu uzdevums būs atzīmēt leņķi uz riņķa līnijas, parādot virzienu uz trešo objektu attiecībā no sevis.</li>
       </ul>
     </p>
+
+    <TutorialQuestion class="mb-5"/>
+
+
     <form @submit.prevent="submitForm">
       <div class="text-center">
-        <button type="submit" class="btn btn-secondary">Sākt izmēģinājumu</button>
+        <button type="submit" class="btn btn-secondary mb-5">Sākt Testu</button>
       </div>
     </form>
   </div>
@@ -23,8 +27,10 @@
 
 <script>
 import axios from 'axios';
+import TutorialQuestion from "@/components/TutorialQuestion.vue";
 
 export default {
+  components: {TutorialQuestion},
   data() {
     return {
       form: {
@@ -33,13 +39,13 @@ export default {
       }
     };
   },
+
   methods: {
     submitForm() {
       sessionStorage.clear();
-      // Ģenerējiet unikālu sesijas ID
       this.form.session_id = `sess-${Date.now()}`;
 
-      const apiUrl = 'http://localhost:8000/perceptiontest/testtaker/';
+      const apiUrl = import.meta.env.VITE_DJANGO_SERVER_URL + '/perceptiontest/testtaker/';
       axios.post(apiUrl, this.form)
           .then(response => {
             sessionStorage.setItem('testTakerId', response.data.id);
@@ -55,8 +61,5 @@ export default {
 </script>
 
 <style>
-.custom-container {
-  max-width: 800px; /* Norāda maksimālo platumu */
-  margin: 0 auto; /* Centrē saturu horizontāli */
-}
+
 </style>

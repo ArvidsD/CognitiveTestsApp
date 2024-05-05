@@ -5,8 +5,8 @@
     "fields": {
       "name": "kaķis",
       "image_url": "perceptiontest/static/perceptiontest/images/kaķis.png",
-      "x_coordinate": 50,
-      "y_coordinate": 50
+      "x_coordinate": 294,
+      "y_coordinate": 203
     }
   },
   {
@@ -15,8 +15,8 @@
     "fields": {
       "name": "koks",
       "image_url": "perceptiontest/static/perceptiontest/images/koks.png",
-      "x_coordinate": 150,
-      "y_coordinate": 500
+      "x_coordinate": 453,
+      "y_coordinate": 322
     }
   },
   {
@@ -25,8 +25,8 @@
     "fields": {
       "name": "luksafors",
       "image_url": "perceptiontest/static/perceptiontest/images/luksafors.png",
-      "x_coordinate": 550,
-      "y_coordinate": 350
+      "x_coordinate": 492,
+      "y_coordinate": 130
     }
   },
   {
@@ -35,8 +35,8 @@
     "fields": {
       "name": "māja",
       "image_url": "perceptiontest/static/perceptiontest/images/maja.png",
-      "x_coordinate": 250,
-      "y_coordinate": 600
+      "x_coordinate": 83,
+      "y_coordinate": 240
     }
   },
   {
@@ -45,8 +45,8 @@
     "fields": {
       "name": "mašīna",
       "image_url": "perceptiontest/static/perceptiontest/images/mašīna.png",
-      "x_coordinate": 450,
-      "y_coordinate": 250
+      "x_coordinate": 312,
+      "y_coordinate": 60
     }
   },
   {
@@ -55,8 +55,8 @@
     "fields": {
       "name": "puķe",
       "image_url": "perceptiontest/static/perceptiontest/images/puķe.png",
-      "x_coordinate": 250,
-      "y_coordinate": 300
+      "x_coordinate": 190,
+      "y_coordinate": 366
     }
   },
   {
@@ -65,8 +65,8 @@
     "fields": {
       "name": "stop zīme",
       "image_url": "perceptiontest/static/perceptiontest/images/stop.png",
-      "x_coordinate": 50,
-      "y_coordinate": 350
+      "x_coordinate": 172,
+      "y_coordinate": 125
     }
   }
 ]

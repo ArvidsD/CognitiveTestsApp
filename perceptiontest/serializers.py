@@ -44,7 +44,7 @@ class DemographicsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Demographics
-        fields = ['test_taker', 'gender', 'age', 'native_language', 'education_levels', 'professions', 'dominant_hand']
+        fields = ['test_taker', 'gender', 'age', 'native_language', 'education_levels', 'professions', 'dominant_hand','field_of_education', 'device_used']
 
     def create(self, validated_data):
         # Iekļaut izglītības līmeņu un profesiju apstrādi

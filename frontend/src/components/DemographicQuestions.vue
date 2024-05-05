@@ -27,7 +27,7 @@
           <option value="Russian">Krievu</option>
           <option value="Other">Cita</option>
         </select>
-        <!-- Ļauj ievadīt citu valodu, ja izvēlēta opcija "Cita" -->
+
         <div v-if="errors.native_language" class="alert alert-danger mt-2">{{ errors.native_language }}</div>
         <input v-if="formData.native_language === 'Other'" v-model="formData.other_language"
                placeholder="Norādiet lūdzu valodu" class="form-control mt-2" @input="clearError('native_language')"/>
@@ -43,6 +43,24 @@
           </label>
         </div>
         <div v-if="errors.education_levels" class="alert alert-danger mt-2">{{ errors.education_levels }}</div>
+      </div>
+
+      <div class="form-group">
+        <label for="fieldOfEducation" class="mb-2"><strong>Izglītības joma</strong></label>
+        <select v-model="formData.field_of_education" class="form-control" @change="clearError('field_of_education')">
+          <option value="">Nav specificēta</option>
+          <option value="Natural Sciences">Dabas zinātnes</option>
+          <option value="Humanities">Humanitārās zinātnes</option>
+          <option value="Social Sciences">Sociālās zinātnes</option>
+          <option value="Engineering">Inženierzinātnes</option>
+          <option value="Agriculture">Lauksaimniecība</option>
+          <option value="Education">Pedagoģija</option>
+          <option value="Medicine">Medicīna</option>
+          <option value="Other">Cita joma</option>
+        </select>
+        <input v-if="formData.field_of_education === 'Other'" v-model="formData.other_field"
+               placeholder="Norādiet lūdzu jomu" class="form-control mt-2" @input="clearError('field_of_education')"/>
+        <div v-if="errors.field_of_education" class="alert alert-danger mt-2">{{ errors.field_of_education }}</div>
       </div>
 
       <div class="form-group">
@@ -73,6 +91,17 @@
         <div v-if="errors.dominant_hand" class="alert alert-danger mt-2">{{ errors.dominant_hand }}</div>
       </div>
 
+      <div class="form-group">
+        <label for="deviceUsed" class="mb-2"><strong>Izmantotā ierīce</strong></label>
+        <select v-model="formData.device_used" class="form-control" @change="clearError('device_used')">
+          <option value="">Lūdzu izvēlieties...</option>
+          <option value="Smartphone">Viedtālrunis</option>
+          <option value="Computer">Dators</option>
+          <option value="Tablet">Planšete</option>
+        </select>
+        <div v-if="errors.device_used" class="alert alert-danger mt-2">{{ errors.device_used }}</div>
+      </div>
+
       <button type="submit" class="btn btn-secondary mb-5 mt-2">Iesniegt</button>
     </form>
   </div>
@@ -91,8 +120,11 @@ export default {
         native_language: '',
         education_levels: [],
         professions: [],
-        other_profession: '',  // Saglabāt vērtību, ja izvēlēts "Cits"
+        other_profession: '',
         dominant_hand: '',
+        field_of_education: '',
+        other_field: '',
+        device_used: '',
       },
       educationOptions: [
         {id: 1, name: "Pamatskola"},
@@ -112,8 +144,8 @@ export default {
         {id: 8, name: "Mājsaimniece (-ks), bērna kopšanas atvaļinājums"},
         {id: 9, name: "Bezdarbnieks"}
       ],
-      otherProfessionChecked: false,  // Pārvaldīt, vai "Cits" ir atzīmēts
-      errors: {} // Pievieno kļūdu objektu
+      otherProfessionChecked: false,
+      errors: {}
     };
   },
   mounted() {
@@ -124,13 +156,13 @@ export default {
   methods: {
     clearError(field) {
       if (this.errors[field]) {
-        this.errors[field] = ''; // Noņemt kļūdas ziņojumu konkrētajam laukam
+        this.errors[field] = '';
       }
     },
     validateForm() {
-      this.errors = {}; // Notīrīt kļūdas
+      this.errors = {};
       let isValid = true;
-      // Pārbauda katra lauka aizpildīšanu
+
       if (!this.formData.gender) {
         this.errors.gender = 'Dzimums ir jāaizpilda!';
         isValid = false;
@@ -155,16 +187,24 @@ export default {
         this.errors.dominant_hand = 'Dominējošā roka ir jāizvēlas!';
         isValid = false;
       }
+      if (!this.formData.field_of_education) {
+        this.errors.field_of_education = 'Izglītības joma ir jāaizpilda!';
+        isValid = false;
+      }
+      if (!this.formData.device_used) {
+        this.errors.device_used = 'Izmantotā ierīce ir jānorāda!';
+        isValid = false;
+      }
       return isValid;
     },
 
     initializeDemographics() {
-      const url = `http://localhost:8000/perceptiontest/submitdemographic/`;
+      const url = import.meta.env.VITE_DJANGO_SERVER_URL + `/perceptiontest/submitdemographic/`;
       const initialData = {test_taker: this.formData.test_taker};
       axios.post(url, initialData)
           .then(response => {
             console.log('Demographic record initialized:', response.data);
-            // Iestatiet karodziņu sesijas krātuvē, lai norādītu, ka inicializācija ir notikusi
+
             sessionStorage.setItem('demographicsInitialized', 'true');
           })
           .catch(error => {
@@ -173,13 +213,10 @@ export default {
     },
     handleSubmit() {
       if (this.validateForm()) {
-        // First, make a copy of the current professions without modifying the original array
-        let professions = [...this.formData.professions];
 
-        // Check if "Other" profession was entered and transform it to uppercase if it was
+        let professions = [...this.formData.professions];
         if (this.otherProfessionChecked && this.formData.other_profession) {
           const otherProfession = this.formData.other_profession.toUpperCase();
-          // Add the "other profession" to the professions array if not already included
           if (!professions.some(profession => profession.name === otherProfession)) {
             professions.push({name: otherProfession});
           }
@@ -187,7 +224,7 @@ export default {
         if (this.formData.native_language === 'Other' && this.formData.other_language) {
           this.formData.native_language = this.formData.other_language;
         }
-        // Transform all existing profession strings in the array to uppercase objects with a 'name' key
+
         professions = professions.map(profession => {
           if (typeof profession === 'string') {
             return {name: profession.toUpperCase()};
@@ -195,31 +232,31 @@ export default {
           return {name: profession.name.toUpperCase()};
         });
 
-        // Similarly, transform all the education_levels to uppercase objects with a 'name' key
+
         const education_levels = this.formData.education_levels.map(level => {
           return {name: level.toUpperCase()};
         });
 
-        // Now, build the final data object to send
+
         const dataToSend = {
           ...this.formData,
           education_levels: education_levels,
           professions: professions,
-          // Remove the 'other_profession' field as it's now included in the professions array
+
         };
         delete dataToSend.other_profession;
 
-        // Make the PUT request with the transformed data object
-        const url = `http://localhost:8000/perceptiontest/submitdemographic/${this.formData.test_taker}/`;
+
+        const url = import.meta.env.VITE_DJANGO_SERVER_URL + `/perceptiontest/submitdemographic/${this.formData.test_taker}/`;
         axios.put(url, dataToSend)
             .then(response => {
-              alert('Data successfully submitted');
+              alert('Paldies par piedalīšanos pētījumā, lai Jums jauka diena!');
               sessionStorage.clear();
               this.$router.push('/');
             })
             .catch(error => {
               console.error('Error submitting the data:', error);
-              alert('Error submitting the data');
+              alert('Kaut kas nogāja greizi, lūdzu pārbaudiet vai esat aizpildījis visus nepieciešamos ievadlaukus.');
             });
       } else {
         alert('Lūdzu, aizpildiet visus obligātos laukus.');

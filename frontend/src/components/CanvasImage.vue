@@ -1,7 +1,7 @@
 <template>
-  <div class="container mt-5">
-    <div class="d-flex justify-content-center">
-      <canvas class ="imageCanvas" ref="imageCanvas" width="800" height="600" style="">
+  <div class="container ">
+    <div class="d-flex justify-content-center ">
+      <canvas class="imageCanvas" ref="imageCanvas" width="600" height="500" style="">
         Your browser does not support the canvas element.
       </canvas>
     </div>
@@ -15,7 +15,7 @@ export default {
   name: 'ImageCanvas',
   data() {
     return {
-      images: [], // Saglabājiet attēlus kā objektus
+      images: [],
     };
   },
   mounted() {
@@ -23,7 +23,7 @@ export default {
   },
   methods: {
     loadImages() {
-      const apiUrl = 'http://localhost:8000/perceptiontest/imageobjects/';
+      const apiUrl = import.meta.env.VITE_DJANGO_SERVER_URL + '/perceptiontest/imageobjects/';
       axios.get(apiUrl).then(response => {
         this.images = response.data;
         this.drawImages();
@@ -40,8 +40,8 @@ export default {
           imageObj.onload = () => {
             context.drawImage(imageObj, img.x_coordinate, img.y_coordinate, 100, 100);
           };
-          // Pievienojiet pilno ceļu līdz attēla avotam
-          imageObj.src = `http://localhost:8000/${img.image_url}`;
+
+          imageObj.src = import.meta.env.VITE_DJANGO_SERVER_URL + `/${img.image_url}`;
         });
       }
     }
@@ -52,8 +52,8 @@ export default {
 .imageCanvas {
   max-width: 100%;
   height: auto;
-  aspect-ratio: 800 / 600; /* Saglabājiet oriģinālo proporciju, pieņemot, ka jūsu oriģinālais izmērs ir 800x600 */
-  display: block; /* Lai nodrošinātu, ka tiek ievērots augstums atkarībā no platuma */
-  margin: 0 auto; /* Centrēšanai */
+  aspect-ratio: 600 / 500;
+  display: block;
+  margin: 0 auto;
 }
 </style>

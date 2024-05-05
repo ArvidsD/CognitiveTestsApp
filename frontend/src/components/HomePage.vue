@@ -18,7 +18,7 @@
 
 <style scoped>
 .custom-container {
-  max-width: 800px; /* Norāda maksimālo platumu */
-  margin: 0 auto; /* Centrē saturu horizontāli */
+  max-width: 800px;
+  margin: 0 auto;
 }
 </style>

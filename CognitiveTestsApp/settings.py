@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 
+from import_export.formats.base_formats import XLSX
 import environ
 
 # Initialise environment variables
@@ -20,11 +21,11 @@ environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = False
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5174",
-    "http://127.0.0.1:5174",
-    "http://127.0.0.1:5173"
+    "https://localhost:5174",
+    "https://127.0.0.1:5174",
+    "https://127.0.0.1:5173"
 ]
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -36,6 +37,9 @@ SECRET_KEY = env('SECRET_KEY')
 DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = []
+
+
+EXPORT_FORMATS = [XLSX]
 
 # Application definition
 
@@ -52,6 +56,9 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "corsheaders",
+    "sslserver",
+    "import_export",
+
 ]
 
 MIDDLEWARE = [

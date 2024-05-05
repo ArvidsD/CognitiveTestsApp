@@ -3,3 +3,9 @@
 /db.sqlite3
 /.idea/dataSources.local.xml
 /.idea/dataSources.xml
+/frontend/localhost+2-key.pem
+/frontend/localhost+2.pem
+/localhost+2.pem
+/localhost+2-key.pem
+/cert.pem
+/key.pem
