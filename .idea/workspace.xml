@@ -5,32 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f2691263-8c0e-4c0d-8fd8-ac4cab3eabc5" name="Changes" comment="fixed validation">
-      <change afterPath="$PROJECT_DIR$/frontend/public/koks.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/public/maja.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/public/mašīna.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/public/puķe.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CognitiveTestsApp/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/CognitiveTestsApp/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CognitiveTestsApp/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/CognitiveTestsApp/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fixtures/initial_imageobjects.json" beforeDir="false" afterPath="$PROJECT_DIR$/fixtures/initial_imageobjects.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/CanvasImage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/CanvasImage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/DemographicQuestions.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/DemographicQuestions.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/HomePage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/HomePage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/PerceptionFinish.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/TutorialQuestion.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/PerceptionQuestion.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/PerceptionQuestion.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/PerceptionTest.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/PerceptionTest.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/TestForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/TestForm.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/views/HomeView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/views/HomeView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/vite.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/vite.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/perceptiontest/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/perceptiontest/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/perceptiontest/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/perceptiontest/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/perceptiontest/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/perceptiontest/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/perceptiontest/templates/perceptiontest/base.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/perceptiontest/templates/perceptiontest/perceptiontest_form.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/perceptiontest/templates/perceptiontest/perceptiontest_image.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/perceptiontest/templates/perceptiontest/perceptiontest_question.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,40 +60,45 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;Django Server.CognitiveTestsApp.executor&quot;: &quot;Run&quot;,
-    &quot;Django Server.Unnamed.executor&quot;: &quot;Run&quot;,
-    &quot;Django tests.Test: .executor&quot;: &quot;Run&quot;,
-    &quot;Django tests.Test: CognitiveTestsApp.executor&quot;: &quot;Run&quot;,
-    &quot;Python.0003_alter_imageobject_image_url.executor&quot;: &quot;Run&quot;,
-    &quot;Python.__init__.executor&quot;: &quot;Run&quot;,
-    &quot;Python.manage.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.pycharm.django.structure.promotion.once.per.project&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Arvids/PycharmProjects/CognitiveTestsApp/frontend/public&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;npm.dev.executor&quot;: &quot;Run&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;vcs.Perforce&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\PyCharm 2023.3.5\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ACTIVE_CLOUD_PROJECT_ACCOUNT": "arvids.dambenieks@gmail.com",
+    "ACTIVE_CLOUD_PROJECT_ID": "perception-test-422419",
+    "ACTIVE_CLOUD_PROJECT_NAME": "perception-test",
+    "ACTIVE_CLOUD_PROJECT_NUMBER": "500574452133",
+    "DefaultHtmlFileTemplate": "HTML File",
+    "Django Server.CognitiveTestsApp.executor": "Run",
+    "Django Server.Unnamed.executor": "Run",
+    "Django tests.Test: .executor": "Run",
+    "Django tests.Test: CognitiveTestsApp.executor": "Run",
+    "Python.0003_alter_imageobject_image_url.executor": "Run",
+    "Python.__init__.executor": "Run",
+    "Python.manage.executor": "Run",
+    "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.pycharm.django.structure.promotion.once.per.project": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "com.google.cloudcode.ide_session_index": "20240507_0001",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/Arvids/PycharmProjects/CognitiveTestsApp/frontend/public",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "npm.dev.executor": "Run",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\PyCharm 2023.3.5\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;vue.recent.templates&quot;: [
-      &quot;Vue Composition API Component&quot;
+  "keyToStringList": {
+    "vue.recent.templates": [
+      "Vue Composition API Component"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Arvids\PycharmProjects\CognitiveTestsApp\frontend\public" />
@@ -294,6 +277,9 @@
       <workItem from="1714470669641" duration="14145000" />
       <workItem from="1714655214454" duration="16852000" />
       <workItem from="1714911515683" duration="11161000" />
+      <workItem from="1714997228701" duration="124000" />
+      <workItem from="1714997360859" duration="2691000" />
+      <workItem from="1715084059292" duration="346000" />
     </task>
     <task id="LOCAL-00001" summary="Project init">
       <option name="closed" value="true" />
