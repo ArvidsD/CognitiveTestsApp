@@ -11,6 +11,7 @@ urlpatterns = [
     path('submit_answer/', views.SubmitAnswerView.as_view(), name='submit_answer'),
     path('submitdemographic/', views.SubmitDemographicView.as_view(), name='submitdemographic'),
     path('submitdemographic/<int:test_taker_id>/', views.SubmitDemographicView.as_view(), name='update_demographic'),
-
+    path('question_ids/', views.QuestionIDList.as_view(), name='question_ids'),
+    path('question/<int:id>/', views.SpecificQuestionView.as_view(), name='specific_question'),
 
 ]

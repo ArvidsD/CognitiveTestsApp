@@ -3,7 +3,7 @@ from rest_framework.exceptions import ValidationError
 from .models import Question, TestTaker, ImageObject, Demographics
 from rest_framework import generics, status
 from .serializers import TestTakerSerializer, ImageObjectSerializer, QuestionSerializer, AnswerSerializer, \
-    DemographicsSerializer
+    DemographicsSerializer, QuestionIDSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
@@ -87,3 +87,14 @@ class SubmitDemographicView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class QuestionIDList(generics.ListAPIView):
+    queryset = Question.objects.all().order_by('?')  # Sakārto nejaušā secībā
+    serializer_class = QuestionIDSerializer
+
+
+class SpecificQuestionView(generics.RetrieveAPIView):
+    queryset = Question.objects.all()
+    serializer_class = QuestionSerializer
+    lookup_field = 'id'

@@ -7,10 +7,12 @@ class TestTakerSerializer(serializers.ModelSerializer):
         model = TestTaker
         fields = '__all__'
 
+
 class ImageObjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = ImageObject
         fields = '__all__'
+
 
 class QuestionSerializer(serializers.ModelSerializer):
     object1 = ImageObjectSerializer(read_only=True)
@@ -20,6 +22,13 @@ class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question
         fields = '__all__'
+
+
+class QuestionIDSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Question
+        fields = ('id',)  # Tikai 'id' lauks tiek iekļauts
+
 
 class AnswerSerializer(serializers.ModelSerializer):
     class Meta:
@@ -31,6 +40,7 @@ class EducationLevelSerializer(serializers.ModelSerializer):
     class Meta:
         model = EducationLevel
         fields = ['name']  # Saglabājiet tikai nosaukumu, ja modelī ir 'name' lauks
+
 
 class ProfessionSerializer(serializers.ModelSerializer):
     class Meta:
@@ -44,7 +54,8 @@ class DemographicsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Demographics
-        fields = ['test_taker', 'gender', 'age', 'native_language', 'education_levels', 'professions', 'dominant_hand','field_of_education', 'device_used']
+        fields = ['test_taker', 'gender', 'age', 'native_language', 'education_levels', 'professions', 'dominant_hand',
+                  'field_of_education', 'device_used']
 
     def create(self, validated_data):
         # Iekļaut izglītības līmeņu un profesiju apstrādi

@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f2691263-8c0e-4c0d-8fd8-ac4cab3eabc5" name="Changes" comment="fixed validation">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="f2691263-8c0e-4c0d-8fd8-ac4cab3eabc5" name="Changes" comment="added settings and requirments">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CognitiveTestsApp/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/CognitiveTestsApp/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/perceptiontest/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/perceptiontest/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/perceptiontest/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/perceptiontest/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/perceptiontest/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/perceptiontest/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -108,7 +109,7 @@
       <recent name="C:\Users\Arvids\PycharmProjects\CognitiveTestsApp\perceptiontest\static\perceptiontest\images" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.dev">
+  <component name="RunManager" selected="Django Server.CognitiveTestsApp">
     <configuration name="Test: CognitiveTestsApp" type="DjangoTestsConfigurationType" temporary="true">
       <module name="CognitiveTestsApp" />
       <option name="ENV_FILES" value="" />
@@ -279,7 +280,7 @@
       <workItem from="1714911515683" duration="11161000" />
       <workItem from="1714997228701" duration="124000" />
       <workItem from="1714997360859" duration="2691000" />
-      <workItem from="1715084059292" duration="346000" />
+      <workItem from="1715084059292" duration="9175000" />
     </task>
     <task id="LOCAL-00001" summary="Project init">
       <option name="closed" value="true" />
@@ -345,7 +346,23 @@
       <option name="project" value="LOCAL" />
       <updated>1714437834156</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="added settings and requirments">
+      <option name="closed" value="true" />
+      <created>1715085945269</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1715085945269</updated>
+    </task>
+    <task id="LOCAL-00010" summary="added settings and requirments">
+      <option name="closed" value="true" />
+      <created>1715086511326</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1715086511326</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -383,7 +400,8 @@
     <MESSAGE value="MVP" />
     <MESSAGE value="MVP design" />
     <MESSAGE value="fixed validation" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed validation" />
+    <MESSAGE value="added settings and requirments" />
+    <option name="LAST_COMMIT_MESSAGE" value="added settings and requirments" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/CognitiveTestsApp$__init__.coverage" NAME="__init__ Coverage Results" MODIFIED="1711824074727" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/CognitiveTestsApp" />
