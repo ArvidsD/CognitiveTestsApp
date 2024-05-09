@@ -49,6 +49,12 @@ class Answer(models.Model):
     time_taken = models.DurationField()
     user_angle = models.IntegerField()
     correct_angle = models.IntegerField()
+    answer_correct = models.BooleanField(default=False)
+
+    def save(self, *args, **kwargs):
+        # Aprēķināt answer_correct pirms saglabāšanas
+        self.answer_correct = abs(self.correct_angle - self.user_angle) <= 15
+        super().save(*args, **kwargs)
 
 
 class EducationLevel(models.Model):
