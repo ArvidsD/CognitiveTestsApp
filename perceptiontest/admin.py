@@ -4,7 +4,6 @@ from import_export import resources, fields
 from import_export.admin import ImportExportModelAdmin
 
 
-# Resource klases
 class TestTakerResource(resources.ModelResource):
     answers = fields.Field()
     demographics = fields.Field()
@@ -96,7 +95,6 @@ class DemographicsAdmin(ImportExportModelAdmin):
     resource_class = DemographicsResource
 
 
-# Reģistrē modeļus admin panelī
 admin.site.register(TestTaker, TestTakerAdmin)
 admin.site.register(ImageObject, ImageObjectAdmin)
 admin.site.register(Question, QuestionAdmin)

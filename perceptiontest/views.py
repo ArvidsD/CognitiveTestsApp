@@ -74,12 +74,8 @@ class SubmitDemographicView(APIView):
         try:
             demographic = Demographics.objects.get(test_taker=test_taker_id)
         except Demographics.DoesNotExist:
-            # Ja neeksistē, varat izveidot jaunu ierakstu, nevis atgriezt kļūdu
             demographic = Demographics(test_taker_id=test_taker_id)
-            # Vai atgriezt kļūdu, ja jūsu biznesa loģika to pieprasa
-            # return Response({'message': 'Demographic data not found'}, status=status.HTTP_404_NOT_FOUND)
 
-        # Pievienojam `test_taker_id` datus pieprasījuma bodijā, ja tas jau nav iekļauts
         request.data['test_taker'] = test_taker_id
 
         serializer = DemographicsSerializer(demographic, data=request.data)
@@ -90,7 +86,7 @@ class SubmitDemographicView(APIView):
 
 
 class QuestionIDList(generics.ListAPIView):
-    queryset = Question.objects.all().order_by('?')  # Sakārto nejaušā secībā
+    queryset = Question.objects.all().order_by('?')
     serializer_class = QuestionIDSerializer
 
 

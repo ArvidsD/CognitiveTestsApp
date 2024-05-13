@@ -5,10 +5,14 @@ import numpy as np
 class TestTaker(models.Model):
     takenTest = models.CharField(max_length=32)
     session_id = models.CharField(max_length=252, default="")
+    custom_id = models.CharField(max_length=252, default="", blank=True, null=True)
 
 
 class ImageObject(models.Model):
     name = models.CharField(max_length=32)
+    name_where = models.CharField(max_length=32, default="")
+    name_to = models.CharField(max_length=32, default="")
+    name_point_to = models.CharField(max_length=32, default="")
     image_url = models.CharField(max_length=250)
     x_coordinate = models.FloatField()
     y_coordinate = models.FloatField()
@@ -23,25 +27,6 @@ class Question(models.Model):
     object3 = models.ForeignKey(ImageObject, related_name='question_object3', on_delete=models.CASCADE)
     correct_angle = models.IntegerField(blank=True, null=True, default=None)
 
-    # def calculate_correct_angle(self):
-    #     # Pieņemam, ka ImageObject modelim ir x_coordinate un y_coordinate lauki
-    #     b = np.array([self.object1.x_coordinate, self.object1.y_coordinate])
-    #     a = np.array([self.object2.x_coordinate, self.object2.y_coordinate])
-    #     c = np.array([self.object3.x_coordinate, self.object3.y_coordinate])
-    #
-    #     ba = a - b
-    #     bc = c - b
-    #
-    #     cosine_angle = np.dot(ba, bc) / (np.linalg.norm(ba) * np.linalg.norm(bc))
-    #     angle = np.arccos(cosine_angle)
-    #
-    #     return np.degrees(angle)
-
-    # def save(self, *args, **kwargs):
-    #     # Automātiski aprēķināt correct_angle pirms saglabāšanas
-    #     self.correct_angle = self.calculate_correct_angle()
-    #     super(Question, self).save(*args, **kwargs)
-
 
 class Answer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
@@ -52,7 +37,6 @@ class Answer(models.Model):
     answer_correct = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
-        # Aprēķināt answer_correct pirms saglabāšanas
         self.answer_correct = abs(self.correct_angle - self.user_angle) <= 15
         super().save(*args, **kwargs)
 
@@ -81,7 +65,6 @@ class Demographics(models.Model):
     professions = models.ManyToManyField(Profession, blank=True)
     dominant_hand = models.CharField(max_length=52, default="Not provided")
     device_used = models.CharField(max_length=52, default="Not provided")
-
 
     def __str__(self):
         return f"{self.test_taker}'s Demographics"
